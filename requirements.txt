@@ -1,5 +1,5 @@
-fastapi~=0.103.0
-pydantic~=2.5.3
-pymysql~=1.0.2
-pyjwt~=2.4.0
-langchain~=0.1.16
+fastapi~=0.110.1
+pydantic~=2.7.0
+pymysql~=1.1.0
+pyjwt~=2.8.0
+langchain~=0.1.13
