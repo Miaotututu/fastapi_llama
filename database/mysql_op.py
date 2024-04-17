@@ -10,7 +10,7 @@ class MysqlDB(object):
         try:
             self.con = pymysql.connect(
                 host=settings.host,
-                port=3306,
+                port=settings.port,
                 user=settings.user,
                 passwd=settings.password,
                 db=settings.database,  # 数据库名
@@ -85,7 +85,7 @@ def get_pymysql_conn(host, user, password, db):
     return pymysql.connect(host=host, user=user, password=password, db=db, autocommit=True)
 
 
-def get_table_row(schema):
+def get_table_row(db_name):
     instruction = (
         "I want you to act as a SQL terminal in front of an example database, you need only to return the sql "
         "command to me.Below is an instruction that describes a task, Write a response that appropriately "
@@ -94,7 +94,7 @@ def get_table_row(schema):
     table_list = list_table()
     table_list_str = ",".join(table_list)
 
-    schema_table_info = "##Instruction:" + schema + " contains tables such as " + table_list_str + "."
+    schema_table_info = "##Instruction:" + db_name + " contains tables such as " + table_list_str + "."
 
     table_col_info = ""
     for table in table_list:
@@ -143,3 +143,14 @@ def exe_select_sql(sql):
     for item in it:
         result_list.append(list(item))
     return result_list
+
+
+def get_table_info_list():
+    table_info_list = []
+    table_list = list_table()
+    for table in table_list:
+        table_col_info = " {0}({1}). ".format(table, ", ".join(list_col(table)))
+        table_info_list.append(table_col_info)
+    return table_info_list
+
+

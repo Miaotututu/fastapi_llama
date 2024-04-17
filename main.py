@@ -1,6 +1,3 @@
-import json
-import os
-
 from fastapi import FastAPI
 from pydantic import BaseModel
 from database.mysql_op import get_table_row, get_path_curr, list_table, get_foreign_key, exe_select_sql
@@ -12,7 +9,6 @@ app = FastAPI()
 class Question(BaseModel):
     db_name: str
     user_question: str = None
-
 
 
 @app.post("/exeSQL")
@@ -49,3 +45,9 @@ def get_tables():
 @app.post("/getForeign")
 def get_foreign():
     return get_foreign_key("audit_log")
+
+
+@app.post("/getSqlAnswer")
+def get_answer(question: Question):
+    result = get_sql(question.user_question, question.db_name)
+    return result

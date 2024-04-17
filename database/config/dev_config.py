@@ -6,7 +6,7 @@ class MysqlSettings(BaseConfig):
     user: str = "root"
     password: str = "200016lrz"
     host: str = "127.0.0.1"
-    port: str = "3306"
+    port: int = 15101
 
 
 # 实例化配置对象
