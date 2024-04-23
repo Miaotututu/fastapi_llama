@@ -1,4 +1,8 @@
+"""
+封装成LLM后调用的demo
+"""
 import requests
+import json
 from langchain.llms.base import LLM
 from typing import Optional, List, Mapping, Any
 
@@ -23,12 +27,16 @@ class Text2sql(LLM):
         run_manager: Optional[CallbackManagerForLLMRun] = None,
         **kwargs: Any,
     ) -> str:
-        data = {'text': prompt}
-        url = "http://0.0.0.0:6667/chat/"
-        response = requests.post(url, json=data)
+        data = {"text": prompt,
+               "db_name": "dimp",
+               "user_question": prompt}
+        print(data)
+        url = "http://0.0.0.0:6667/getSqlAnswer"
+        response = requests.post(url, data=json.dumps(data))
         if response.status_code != 200:
             return "error"
         resp = response.json()
+        print(resp)
         if stop is not None:
             response = enforce_stop_tokens(response, stop)
         self.history = self.history + [[None, resp['result']]]
@@ -36,4 +44,5 @@ class Text2sql(LLM):
 
 
 llm = Text2sql()
-llm("请给我一个查询mc_table表的sql")
+print("ready!!!")
+print(llm("请给我一个查询mc_table表的sql"))

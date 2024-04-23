@@ -1,3 +1,6 @@
+"""
+鉴权 token 组装过程
+"""
 import time
 import jwt
 import os

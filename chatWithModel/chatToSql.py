@@ -1,3 +1,6 @@
+"""
+直接调用本地微调模型demo
+"""
 from pydantic import BaseModel
 import torch
 from transformers import LlamaTokenizer, LlamaForCausalLM
@@ -18,13 +21,16 @@ class QuestionResponse(BaseModel):
 
 def get_sql(user_question, db_name):
     table_info_list = get_table_info_list()
-    prompt = prompt_template1.format(db_name, ",".join(table_info_list), user_question,
-                                     json.dumps(RESPONSE_FORMAT_SIMPLE, ensure_ascii=False, indent=4))
+    prompt = prompt_template1.format(db_name, ",".join(table_info_list), user_question)
     print(prompt)
     model_input = tokenizer(prompt, return_tensors="pt").to("cuda")
     model.eval()
     with torch.no_grad():
         res = model.generate(**model_input, max_new_tokens=300)[0]
-        result = tokenizer.decode(res, skip_special_tokens=True)
+        result = tokenizer.decode(res, skip_special_tokens=True, spaces_between_special_tokens=False)
+        print(type(result))
+        sql = result.split("sql%_%")[-1]
+        print(type(sql))
+        print(sql)
         print("result is:" + result)
-        return result
+        return result, sql

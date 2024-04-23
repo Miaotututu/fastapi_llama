@@ -1,12 +1,15 @@
-import json
-
+"""
+    这个文件中的内容是 langchain中的sql相关的函数的部分使用
+    https://api.python.langchain.com/en/latest/utilities/langchain_community.utilities.sql_database.SQLDatabase.html
+    逻辑有点憨憨 是想先让 glm4根据问题去 数据库映射相应的表和字段
+"""
 from langchain_community.utilities.sql_database import SQLDatabase
 from langchain_openai import ChatOpenAI
 from langchain_community.agent_toolkits import create_sql_agent
 from langchain.prompts import ChatPromptTemplate
 from langchain.output_parsers import ResponseSchema
 from langchain.output_parsers import StructuredOutputParser
-from .jwt_token import generate_token
+from chatWithGLM.jwt_token import generate_token
 
 
 def get_glm(temperature):

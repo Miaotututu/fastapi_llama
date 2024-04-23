@@ -1,3 +1,6 @@
+"""
+一些常用的mysql操作
+"""
 import os
 
 import pymysql
@@ -85,6 +88,7 @@ def get_pymysql_conn(host, user, password, db):
     return pymysql.connect(host=host, user=user, password=password, db=db, autocommit=True)
 
 
+# 根据数据库名 拼接出一个提示词（弃用方案）
 def get_table_row(db_name):
     instruction = (
         "I want you to act as a SQL terminal in front of an example database, you need only to return the sql "
@@ -125,6 +129,7 @@ def list_table():
     return table_list
 
 
+# 获取表的外键
 def get_foreign_key(table_name):
     db = MysqlDB()
     foreign_key_it = db.search_all(
@@ -135,6 +140,7 @@ def get_foreign_key(table_name):
     return foreign_key_info
 
 
+# 执行sql
 def exe_select_sql(sql):
     db = MysqlDB()
     it = db.search_all(sql)
@@ -145,6 +151,7 @@ def exe_select_sql(sql):
     return result_list
 
 
+# 获取一个数据库中的所有表信息
 def get_table_info_list():
     table_info_list = []
     table_list = list_table()
@@ -152,5 +159,3 @@ def get_table_info_list():
         table_col_info = " {0}({1}). ".format(table, ", ".join(list_col(table)))
         table_info_list.append(table_col_info)
     return table_info_list
-
-
