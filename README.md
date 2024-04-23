@@ -2,6 +2,7 @@
 纯小白0AI基础，结合网上的信息缝合出来了这个demo 别嫌我菜，给其他的纯小白用的😭
 
 也留一下自己的学习路径吧：
+
 a. 以智谱AI GLM为基础 了解AI能干什么(python-https://github.com/MetaGLM/glm-cookbook)
 智谱AI注册就能送token然后通过这个项目可以了解很多AI能做的事情
 
