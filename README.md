@@ -3,10 +3,12 @@
 
 也留一下自己的学习路径吧：
 a. 以智谱AI GLM为基础 了解AI能干什么(python-https://github.com/MetaGLM/glm-cookbook)
-智谱AI注册就能用一些API，通过这个项目可以了解很多AI能做的事情
+智谱AI注册就能送token然后通过这个项目可以了解很多AI能做的事情
+
 b. 了解和使用langchain (https://www.bilibili.com/video/BV1pz4y1e7T9) 
 langchain就是方便你玩大模型的东西 蛮好用的 很强大
 https://python.langchain.com.cn/docs/
+
 c. 怎么微调大模型
 
 
