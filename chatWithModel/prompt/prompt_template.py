@@ -12,9 +12,7 @@ response_area_chart:Suitable for visualization of time series data, comparison o
 response_heatmap:Suitable for visual analysis of time series data, large-scale data sets, distribution of classified data, etc.
 User Question:
     {2}
-Please think step by step and respond according to the following JSON format:
-    {3}
-Ensure the response is correct json and can be parsed by Python json.loads.
+
 """
 
 RESPONSE_FORMAT_SIMPLE = {

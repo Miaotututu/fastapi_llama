@@ -14,14 +14,16 @@ class Question(BaseModel):
 
 class Answer(BaseModel):
     result: str
-    db_result_list: list
+    sql: str
+    db_result: list
 
 
 # 调用本地微调模型
 @app.post("/getSqlAnswer")
 def get_answer(question: Question):
-    result = get_sql(question.user_question, question.db_name)
-    return Answer(result=result)
+    result, sql = get_sql(question.user_question, question.db_name)
+    db_result_list = exe_select_sql(sql)
+    return Answer(result=result, sql=sql, db_result=db_result_list)
 
 
 # 使用LLM类
