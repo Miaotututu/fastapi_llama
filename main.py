@@ -23,7 +23,7 @@ class Answer(BaseModel):
 def get_answer(question: Question):
     result, sql = get_sql(question.user_question, question.db_name)
     db_result_list = exe_select_sql(sql)
-    return Answer(result=result, sql=sql, db_result=db_result_list)
+    return Answer(result='正确处理', sql=sql, db_result=db_result_list)
 
 
 # 使用LLM类
