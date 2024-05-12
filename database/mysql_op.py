@@ -5,18 +5,18 @@ import os
 
 import pymysql
 
-from .config.dev_config import settings
+from .config.db_info_config import settings
 
 
 class MysqlDB(object):
-    def __init__(self):
+    def __init__(self, db_name):
         try:
             self.con = pymysql.connect(
-                host=settings.host,
-                port=settings.port,
-                user=settings.user,
-                passwd=settings.password,
-                db=settings.database,  # 数据库名
+                host=settings[db_name].host,
+                port=settings[db_name].port,
+                user=settings[db_name].user,
+                passwd=settings[db_name].password,
+                db=settings[db_name].database,  # 数据库名
                 charset='utf8'
             )
         except pymysql.Error as e:
@@ -116,22 +116,22 @@ def get_path_curr():
 
 
 # 查询所有字段
-def list_col(table_name):
-    db = MysqlDB()
+def list_col(table_name, db_name):
+    db = MysqlDB(db_name)
     column_list = db.get_columns("select * from %s" % table_name)
     return column_list
 
 
 # 列出所有的表
-def list_table():
-    db = MysqlDB()
+def list_table(db_name):
+    db = MysqlDB(db_name)
     table_list = db.get_tables("show tables")
     return table_list
 
 
 # 获取表的外键
-def get_foreign_key(table_name):
-    db = MysqlDB()
+def get_foreign_key(table_name,db_name):
+    db = MysqlDB(db_name)
     foreign_key_it = db.search_all(
         f"SELECT table_name, column_name, referenced_table_name, referenced_column_name FROM information_schema.key_column_usage WHERE constraint_name NOT LIKE '%FOREIGN KEY%' AND TABLE_NAME = '{table_name}' AND  REFERENCED_TABLE_NAME is not null")
     foreign_key_info = " "
@@ -141,8 +141,8 @@ def get_foreign_key(table_name):
 
 
 # 执行sql
-def exe_select_sql(sql):
-    db = MysqlDB()
+def exe_select_sql(sql,db_name):
+    db = MysqlDB(db_name)
     it = db.search_all(sql)
 
     result_list = []
@@ -152,10 +152,10 @@ def exe_select_sql(sql):
 
 
 # 获取一个数据库中的所有表信息
-def get_table_info_list():
+def get_table_info_list(db_name):
     table_info_list = []
-    table_list = list_table()
+    table_list = list_table(db_name)
     for table in table_list:
-        table_col_info = " {0}({1}). ".format(table, ", ".join(list_col(table)))
+        table_col_info = " {0}({1}). ".format(table, ", ".join(list_col(table,db_name)))
         table_info_list.append(table_col_info)
     return table_info_list

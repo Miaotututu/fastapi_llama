@@ -20,7 +20,7 @@ class QuestionResponse(BaseModel):
 
 
 def get_sql(user_question, db_name):
-    table_info_list = get_table_info_list()
+    table_info_list = get_table_info_list(db_name)
     prompt = prompt_template1.format(db_name, ",".join(table_info_list), user_question)
     print(prompt)
     model_input = tokenizer(prompt, return_tensors="pt").to("cuda")
